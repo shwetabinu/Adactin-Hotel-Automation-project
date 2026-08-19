@@ -5,9 +5,6 @@ export class LoginPage {
   readonly usernameInput: Locator;
   readonly passwordInput: Locator;
   readonly loginButton: Locator;
-  
-
-  readonly url = 'https://adactinhotelapp.com/HotelAppBuild2/'; // Replace with the actual URL of the login page
 
   constructor(page: Page) {
     // Initialize the page and locators for username, password, and login button
