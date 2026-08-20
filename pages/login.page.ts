@@ -1,4 +1,5 @@
 import { Page,Locator } from '@playwright/test';
+
 export class LoginPage {
     // Define the locators for username, password, and login button
   readonly page: Page;
