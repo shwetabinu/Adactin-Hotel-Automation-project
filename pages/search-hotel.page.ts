@@ -2,6 +2,7 @@ import { Page, Locator } from '@playwright/test';
 import { BasePage } from './base.page';
 import { SearchCriteria } from '../data/booking.data';
 
+
 export class SearchHotelPage extends BasePage{
   readonly path = '/SearchHotel.php'
   private readonly locationDropdown: Locator = this.page.locator('#location');;
@@ -29,12 +30,45 @@ export class SearchHotelPage extends BasePage{
     await this.checkOutDateInput.fill(criteria.checkOutDate);
     await this.adultsPerRoomDropdown.selectOption(criteria.adultsPerRoom);
     await this.childrenPerRoomDropdown.selectOption(criteria.childrenPerRoom);
+    
+  }
+
+  async clickOnSubmit(){
     await this.searchButton.click();
   }
 
+  
   async resetForm(){
     await this.resetButton.click();
   }
+
+  async verifyResettedForm(criteria: SearchCriteria
+  ): Promise<boolean> {
+    const actualLocationDropdown = await this.locationDropdown.innerText();
+    const actualHotelsdropdown = await this.hotelsDropdown.innerText();
+    const actualroomTypeDropDown = await this.roomTypeDropdown.innerText();
+    const actualnumberOfRoomsDropDown = await this.numberOfRoomsDropdown.innerText();
+    const actualcheckInDateInput = await this.checkInDateInput.innerText();
+    const actualcheckOutDateInput = await this.checkOutDateInput.innerText();
+    const actualadultsPerRoomDropdown = await this.adultsPerRoomDropdown.innerText();;
+    const actualchildrenPerRoomDropdown = await this.childrenPerRoomDropdown.innerText();;
+    
+    return(
+      actualHotelsdropdown.trim() == criteria.hotels && 
+      actualLocationDropdown.trim() == criteria.location && 
+      actualroomTypeDropDown.trim() == criteria.roomType &&
+      actualnumberOfRoomsDropDown.trim() == criteria.numberOfRooms &&
+      actualcheckInDateInput.trim() == criteria.checkInDate &&
+      actualcheckOutDateInput.trim() == criteria.checkOutDate &&
+      actualadultsPerRoomDropdown.trim() == criteria.adultsPerRoom &&
+      actualchildrenPerRoomDropdown.trim() == criteria.childrenPerRoom
+  
+    )
+      
+    
+
+  }
+
 
   async verifySearchResultCount(rowCount: number): Promise<boolean>{
     //logic to verify search results table contain values based on the search criteria

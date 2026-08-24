@@ -46,6 +46,48 @@ export function validSearchCriteria(overrides: Partial<SearchCriteria> = {}): Se
   };
 }
 
+export function invalidBlankSearchCriteria(overrides: Partial<SearchCriteria> = {}): SearchCriteria {
+  //const checkIn = faker.date.soon({ days: 7 }).toString();
+  
+ // const checkOut = faker.date.soon({ days: 3, refDate: checkIn }).toString();
+
+  return {
+    location: '- Select Location -',
+    hotels: '- Select Hotel -',
+    roomType: '- Select Room Type -',
+    numberOfRooms: '- Select Number of Rooms -',
+    checkInDate: '',
+    checkOutDate: '',
+    adultsPerRoom: '- Select Adults per Room -',
+    childrenPerRoom: '1 - One',
+    ...overrides,
+  };
+}
+
+export function defaultSearchCriteria(overrides: Partial<SearchCriteria> = {}): SearchCriteria {
+  const today = new Date();
+
+// Australian/UK Format (DD/MM/YYYY) -> "24/08/2026"
+ const checkInDate = today.toLocaleDateString('en-GB');
+const tomorrow = new Date(today);
+
+// Add exactly 1 day
+tomorrow.setDate(today.getDate() + 1);
+const checkOutDate = tomorrow.toLocaleDateString('en-GB');
+//const checkOut = faker.date.soon({ days: 3, refDate: checkIn }).toString();
+
+  return {
+    location: '- Select Location -',
+    hotels: '- Select Hotel -',
+    roomType: '- Select Room Type -',
+    numberOfRooms: '1 - One',
+    checkInDate: checkInDate,
+    checkOutDate: checkOutDate,
+    adultsPerRoom: '- Select Adults per Room -',
+    childrenPerRoom: '1 - One',
+    ...overrides,
+  };
+}
 // --- Valid guest/payment details ---
 export function validGuestDetails(overrides: Partial<GuestDetails> = {}): GuestDetails {
   return {
@@ -84,4 +126,6 @@ export function validBookingRequest(): BookingRequest {
     search: validSearchCriteria(),
     guest: validGuestDetails(),
   };
+
+
 }

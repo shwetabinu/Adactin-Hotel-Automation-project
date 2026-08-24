@@ -57,6 +57,14 @@ await loggedOutPage.loginInvalid(scenarioType);
 
 })
 
+Given('I am already logged into Adactin Hotel application', () => {
+  // Write code here that turns the phrase above into concrete actions
+})
+
+Given('I am already logged into Adactin Hotel application', () => {
+  // Write code here that turns the phrase above into concrete actions
+})
+
 
 
 
