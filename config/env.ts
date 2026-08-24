@@ -1,3 +1,9 @@
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 export type Build = 'build1' | 'build2';
 
 export interface EnvConfig {
@@ -13,8 +19,6 @@ export interface EnvConfig {
   };
   ci: boolean;
 }
-import dotenv from 'dotenv';
-import path from 'path';
 
 const build = (process.env.BUILD as Build) ?? 'build2';
 

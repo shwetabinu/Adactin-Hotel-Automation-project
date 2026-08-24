@@ -1,40 +1,41 @@
-import { test as base, expect } from '@playwright/test';
+// fixtures/auth.fixture.ts
+import { test as base } from 'playwright-bdd';
+import { expect } from '@playwright/test';
 import { LoginPage } from '../pages/login.page';
-import { getEnvConfig } from '../config/env';
-import path from 'path';
+import { getEnvConfig } from '../config/env'; // 👈 Using your env config helper
 
-
-type AuthFixtures = {
-  authenticatedPage: void; // signals "log in before this test runs"
+type authFixtures = {
+  authenticatedLoginPage: LoginPage;    // This will represent your automatically logged-in state
+  loggedOutPage: LoginPage; // This will represent your fresh, clean login screen
 };
 
-type WorkerFixtures = {
-  storageStatePath: string;
-};
+export const authFixtures = base.extend<authFixtures>({
+  // This fixture now automatically logs in the user before the test starts
+  authenticatedLoginPage: async ({ page }, use) => {
+    const authenticatedLoginPage = new LoginPage(page);
+    const config = getEnvConfig(); // Get your credentials from your config helper
 
-export const test = base.extend<AuthFixtures, WorkerFixtures>({
-  storageStatePath: [async ({ browser }, use, workerInfo) => {
-    const statePath = path.resolve(
-      `.auth/user-${workerInfo.workerIndex}.json`
-    );
+    // Execute the actual login automation steps on your page object
+    await authenticatedLoginPage.goto(); // Or whatever navigation method you named
+    await authenticatedLoginPage.login(config.defaultUser.username,config.defaultUser.username); // Replace with your LoginPage method names
+    
+    // Pass the already authenticated page object to your standard test steps
+    await use(authenticatedLoginPage);
+  },
 
-    const context = await browser.newContext();
+  // 2. CORRECT: This fixture is configured perfectly for your login scenarios
+  loggedOutPage: async ({ browser }, use) => {
+    // Creates a completely clean context with no saved cookies, tokens, or storage state
+    const context = await browser.newContext({ storageState: { cookies: [], origins: [] } });
     const page = await context.newPage();
     const loginPage = new LoginPage(page);
-    const { username, password } = getEnvConfig().defaultUser;
+    
+    // Navigate to the raw login page so the test can manually type credentials
+    await loginPage.goto(); 
 
-    await page.goto('/');
-    await loginPage.login(username, password);
-    await expect(page).toHaveURL(/Search/); // confirm login succeeded
+    await use(loginPage);
 
-    await context.storageState({ path: statePath });
+    // Clean up the isolated browser context after the test finishes
     await context.close();
-
-    await use(statePath);
-  }, { scope: 'worker' }],
-
-  authenticatedPage: [async ({ page, storageStatePath }, use) => {
-    // page already has storageState applied via config below
-    await use();
-  }, { auto: true }],
+  }
 });

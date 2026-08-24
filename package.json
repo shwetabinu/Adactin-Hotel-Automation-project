@@ -1,6 +1,10 @@
 {
+  "name": "Hotel Adactin Application Automation project",
+  "version": "1.0.0",
+  "type": "module",
   "devDependencies": {
     "@cucumber/cucumber": "^13.2.1",
+    "@faker-js/faker": "^10.6.0",
     "@playwright/test": "1.57",
     "@types/node": "^26.2.0",
     "dotenv": "^17.4.2",

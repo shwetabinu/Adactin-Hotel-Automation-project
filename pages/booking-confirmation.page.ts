@@ -1,20 +1,14 @@
 import {Page, Locator} from '@playwright/test';
+import { BasePage } from './base.page';
 
-export class BookingConfirmationPage {
-    readonly page: Page;
-    readonly orderNumberInput: Locator;
-    readonly searchHotelButton: Locator;
-    readonly myItineraryButton: Locator;
-    readonly logoutButton: Locator;
-    readonly expectedTitle: string = 'Booking Confirmation'; // Replace with the actual expected title
+export class BookingConfirmationPage extends BasePage{
+    readonly path = '/BookingConfirmation.php'
+    private readonly orderNumberInput: Locator = this.page.locator('#order_no');;
+    private readonly searchHotelButton: Locator = this.page.locator('#search_hotel');
+    private readonly myItineraryButton: Locator = this.page.locator('#my_itinerary');
+    private readonly logoutButton: Locator = this.page.locator('#logout');
+    private readonly expectedTitle: string = 'Booking Confirmation'; // Replace with the actual expected title
 
-    constructor(page: Page) {
-        this.page = page;
-        this.orderNumberInput = page.locator('#order_no');
-        this.searchHotelButton = page.locator('#search_hotel');
-        this.myItineraryButton = page.locator('#my_itinerary');
-        this.logoutButton = page.locator('#logout');
-    }
 
     async getOrderNumber(): Promise<string> {
         return await this.orderNumberInput.inputValue();

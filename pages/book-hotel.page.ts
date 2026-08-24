@@ -1,31 +1,20 @@
 import { Page,Locator } from '@playwright/test';
+import { BasePage } from './base.page';
+import { PathLike } from 'fs';
 
-export class BookHotelPage {
-    readonly page: Page;
-    readonly firstNameInput: Locator;
-    readonly lastNameInput: Locator;
-    readonly addressInput: Locator;
-    readonly creditCardNumberInput: Locator;
-    readonly creditCardTypeSelect: Locator;
-    readonly expiryMonthSelect: Locator;
-    readonly expiryYearSelect: Locator;
-    readonly cvvNumberInput: Locator;
-    readonly bookNowButton: Locator;
-    readonly cancelButton: Locator;
-    readonly expectedTitle: string = 'Book Hotel'; // Replace with the actual expected title
+export class BookHotelPage extends BasePage{
+    readonly path = '/BookHotel.php';
+    private readonly firstNameInput: Locator = this.page.locator('#first_name');;
+    private readonly lastNameInput: Locator = this.page.locator('#last_name');
+    private readonly addressInput: Locator = this.page.locator('#address');
+    private readonly creditCardNumberInput: Locator = this.page.locator('#cc_num');
+    private readonly creditCardTypeSelect: Locator = this.page.locator('#cc_type');
+    private readonly expiryMonthSelect: Locator = this.page.locator('#cc_exp_month');
+    private readonly expiryYearSelect: Locator = this.page.locator('#cc_exp_year');
+    private readonly cvvNumberInput: Locator = this.page.locator('#cc_cvv');
+    private readonly bookNowButton: Locator = this.page.locator('#book_now');
+    private readonly cancelButton: Locator = this.page.locator('#cancel');
+    private readonly expectedTitle: string = 'Book Hotel'; // Replace with the actual expected title
 
-    constructor(page: Page) {
-        this.page = page;
-        this.firstNameInput = page.locator('#first_name');
-        this.lastNameInput = page.locator('#last_name');
-        this.addressInput = page.locator('#address');
-        this.creditCardNumberInput = page.locator('#cc_num');
-        this.creditCardTypeSelect = page.locator('#cc_type');
-        this.expiryMonthSelect = page.locator('#cc_exp_month');
-        this.expiryYearSelect = page.locator('#cc_exp_year');
-        this.cvvNumberInput = page.locator('#cc_cvv');
-        this.bookNowButton = page.locator('#book_now');
-        this.cancelButton = page.locator('#cancel');
-    }
 
 }

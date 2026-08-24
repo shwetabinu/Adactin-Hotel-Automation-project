@@ -17,4 +17,32 @@ export class NavigationBar {
         this.changePasswordLink = page.locator('a[href="ChangePassword.php"]');
         this.logoutLink = page.locator('a[href="Logout.php"]');
     }
+
+
+    async goToSearchHotel(): Promise<void> {
+    await this.searchHotelLink.click();
+    }
+
+    async goToMyItinerary(): Promise<void> {
+    await this.bookedItineraryLink.click();
+    }
+
+    async logout(): Promise<void> {
+    await this.logoutLink.click();
+    }
+
+    async goToChangePassword(): Promise<void> {
+    await this.logoutLink.click();
+    }
+
+     async getLoggedInUsername(): Promise<string> {
+    return (await this.welcomeMenu.innerText()).trim();
+    }
+
+  async isVisible(): Promise<boolean> {
+    // Nav bar only renders post-login; used by page objects/tests to
+    // confirm they landed on an authenticated screen.
+    return this.logoutLink.isVisible();
+  }
+  
 }

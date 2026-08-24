@@ -1,18 +1,13 @@
 import { Page, Locator } from '@playwright/test';
+import { BasePage } from './base.page';
 
-export class SelectHotelPage {
-    readonly page: Page;
-    readonly hotelRadioButtons: Locator;
-    readonly continueButton: Locator
-    readonly expectedTitle: string = 'Select Hotel'; // Replace with the actual expected title
-    readonly cancelButton: Locator;
+export class SelectHotelPage extends BasePage{
+    readonly path = '/SelectHotel.php';
+    private readonly hotelRadioButtons: Locator = this.page.locator('input[name^="radiobutton_"]');;
+    private readonly continueButton: Locator = this.page.locator('#continue');
+    private readonly expectedTitle: string = 'Select Hotel'; // Replace with the actual expected title
+    private readonly cancelButton: Locator = this.page.locator('#cancel');
 
-    constructor(page: Page) {
-        this.page = page;
-        this.hotelRadioButtons = page.locator('input[name^="radiobutton_"]');
-        this.continueButton = page.locator('#continue');
-        this.cancelButton = page.locator('#cancel');
-    }
 
     async selectFirstHotelAndContinue() {
         await this.hotelRadioButtons.first().check();
