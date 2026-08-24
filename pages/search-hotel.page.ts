@@ -1,51 +1,34 @@
 import { Page, Locator } from '@playwright/test';
+import { BasePage } from './base.page';
+import { SearchCriteria } from '../data/booking.data';
 
-export class SearchHotelPage {
-  readonly page: Page;
-  readonly locationDropdown: Locator;
-  readonly hotelsDropdown: Locator;
-  readonly roomTypeDropdown: Locator;
-  readonly numberOfRoomsDropdown: Locator;
-  readonly checkInDateInput: Locator;
-  readonly checkOutDateInput: Locator;
-  readonly adultsPerRoomDropdown: Locator;
-  readonly childrenPerRoomDropdown: Locator;
-  readonly searchButton: Locator;
-  readonly resetButton: Locator;
-  readonly expectedTitle: string = 'Search Hotel'; // Replace with the actual expected title
+export class SearchHotelPage extends BasePage{
+  readonly path = '/SearchHotel.php'
+  private readonly locationDropdown: Locator = this.page.locator('#location');;
+  private readonly hotelsDropdown: Locator = this.page.locator('#hotels');;
+  private readonly roomTypeDropdown: Locator = this.page.locator('#room_type');;
+  private readonly numberOfRoomsDropdown: Locator = this.page.locator('#room_nos');;
+  private readonly checkInDateInput: Locator = this.page.locator('#datepick_in');;
+  private readonly checkOutDateInput: Locator = this.page.locator('#datepick_out');;
+  private readonly adultsPerRoomDropdown: Locator = this.page.locator('#adult_room');;
+  private readonly childrenPerRoomDropdown: Locator = this.page.locator('#child_room');;
+  private readonly searchButton: Locator = this.page.locator('#Submit');;
+  private readonly resetButton: Locator = this.page.locator('#Reset');;
+  readonly resultsTable: Locator = this.page.locator(`//tr[td[contains(., 'Select')]]//td[1]//table`).nth(1);
+  private readonly expectedTitle: string = 'Search Hotel'; // Replace with the actual expected title
 
-  constructor(page: Page) {
-    this.page = page;
-    this.locationDropdown = page.locator('#location');
-    this.hotelsDropdown = page.locator('#hotels');
-    this.roomTypeDropdown = page.locator('#room_type');
-    this.numberOfRoomsDropdown = page.locator('#room_nos');
-    this.checkInDateInput = page.locator('#datepick_in');
-    this.checkOutDateInput = page.locator('#datepick_out');
-    this.adultsPerRoomDropdown = page.locator('#adult_room');
-    this.childrenPerRoomDropdown = page.locator('#child_room');
-    this.searchButton = page.locator('#Submit');
-    this.resetButton = page.locator('#Reset');
-  }
 
   async searchHotel(
-    location: string,
-    hotel: string,
-    roomType: string,
-    numberOfRooms: string,
-    checkInDate: string,
-    checkOutDate: string,
-    adultsPerRoom: string,
-    childrenPerRoom: string
+    criteria: SearchCriteria
   ): Promise<void> {
-    await this.locationDropdown.selectOption(location);
-    await this.hotelsDropdown.selectOption(hotel);
-    await this.roomTypeDropdown.selectOption(roomType);
-    await this.numberOfRoomsDropdown.selectOption(numberOfRooms);
-    await this.checkInDateInput.fill(checkInDate);
-    await this.checkOutDateInput.fill(checkOutDate);
-    await this.adultsPerRoomDropdown.selectOption(adultsPerRoom);
-    await this.childrenPerRoomDropdown.selectOption(childrenPerRoom);
+    await this.locationDropdown.selectOption(criteria.location);
+    await this.hotelsDropdown.selectOption(criteria.hotels);
+    await this.roomTypeDropdown.selectOption(criteria.roomType);
+    await this.numberOfRoomsDropdown.selectOption(criteria.numberOfRooms);
+    await this.checkInDateInput.fill(criteria.checkInDate);
+    await this.checkOutDateInput.fill(criteria.checkOutDate);
+    await this.adultsPerRoomDropdown.selectOption(criteria.adultsPerRoom);
+    await this.childrenPerRoomDropdown.selectOption(criteria.childrenPerRoom);
     await this.searchButton.click();
   }
 
@@ -90,9 +73,13 @@ export class SearchHotelPage {
     
   
   }
-    async verifySearchPageTitle(page: any): Promise<boolean> {
-    const actualTitle = await page.title();
-    return actualTitle === this.expectedTitle;
+    async verifySearchPageTitle() {
+    const actualTitle = await this.page.title();
+    console.log('page title is'+ actualTitle);
+    if(actualTitle == this.expectedTitle)
+      return true;
+   else
+    return false;
   }
 
 

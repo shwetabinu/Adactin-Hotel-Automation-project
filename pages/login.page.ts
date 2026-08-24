@@ -1,38 +1,85 @@
 import { Page,Locator } from '@playwright/test';
+import { BasePage } from './base.page';
+import { getEnvConfig } from '../config/env'; 
+import { invalidCredentials } from '../data/user.data.js';
 
-export class LoginPage {
+export class LoginPage extends BasePage {
+  readonly path = '';
     // Define the locators for username, password, and login button
-  readonly page: Page;
-  readonly usernameInput: Locator;
-  readonly passwordInput: Locator;
-  readonly loginButton: Locator;
+  private readonly usernameInput: Locator = this.page.locator('#username');
+  private readonly passwordInput: Locator = this.page.locator('#password');
+  private readonly loginButton: Locator = this.page.locator('#login');
 
-  constructor(page: Page) {
-    // Initialize the page and locators for username, password, and login button
-    this.page = page;
-    this.usernameInput = page.locator('#username');
-    this.passwordInput = page.locator('#password');
-    this.loginButton = page.locator('#login');
-    
-    
+  async login(): Promise<void>;
+
+
+  // 2. Overload Signature B: Takes explicit string parameters
+  async login(username: string, password: string): Promise<void>;
+  
+ 
+  async login(username?: string, password?: string): Promise<void> {
+    // Logic to perform login action, e.g., filling in username and password fields and clicking the login button
+    if(username && password)
+    {
+    await this.usernameInput.fill(username);
+    await this.passwordInput.fill(password);
+    await this.loginButton.click();
+    }
+    else
+    {
+    const { username, password } = getEnvConfig().defaultUser;
+    await this.usernameInput.fill(username);
+    await this.passwordInput.fill(password);
+    await this.loginButton.click();
+    }
   }
 
-  async login(username: string, password: string): Promise<void> {
-    // Logic to perform login action, e.g., filling in username and password fields and clicking the login button
+  async loginInvalid(scenario: string){
+    let username = "";
+    let password = "";
+    switch(scenario)
+    {
+      case "Blank username and password":{
+        
+        username = invalidCredentials[0].username;
+        password = invalidCredentials[0].password;
+
+      break;
+      }
+      
+      case "Blank username":{
+        username = invalidCredentials[2].username;
+        password = invalidCredentials[2].password;
+
+      break;
+      } 
+      case "Blank password":{
+        username = invalidCredentials[3].username;
+        password = invalidCredentials[3].password;
+
+      break;
+      } 
+      case "Invalid credentials":{
+        username = invalidCredentials[1].username;
+        password = invalidCredentials[1].password;
+        break;
+      }
+    }
     await this.usernameInput.fill(username);
     await this.passwordInput.fill(password);
     await this.loginButton.click();
   }
 
-  async goToLoginPage(): Promise<void> {
-    //Logic to navigate to the login page, e.g., using page.goto() with the appropriate URL
-    await this.page.goto(process.env.STAGE_URL!);
-  }
- 
+
   async verifyLoginSuccess(): Promise<boolean> {
     // Logic to verify successful login, e.g., check for a specific element on the landing page
     const successIndicator = this.page.getByText('Welcome to Adactin Group of Hotels'); // Replace with actual selector
     return await successIndicator.isVisible();
+  }
+
+  async verifyLoginFailure():Promise<boolean>{
+    const failureIndicator = this.page.getByText('Invalid Login details or Your Password might have expired. ');
+    return await failureIndicator.isVisible();
   }
 
   async verifyPendingEmailVerification(): Promise<boolean> {

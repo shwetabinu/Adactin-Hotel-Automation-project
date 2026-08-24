@@ -1,4 +1,4 @@
-import { test as base } from '@playwright/test';
+import { test as base } from 'playwright-bdd';
 import { LoginPage } from '../pages/login.page';
 import { SearchHotelPage } from '../pages/search-hotel.page';
 import { SelectHotelPage } from '../pages/select-hotel.page';
@@ -14,7 +14,7 @@ type PageFixtures = {
   bookingConfirmationPage: BookingConfirmationPage;
   bookedItineraryPage: BookedItineraryPage;
 }
-export const test = base.extend<PageFixtures>({
+export const pageFixtures = base.extend<PageFixtures>({
   loginPage: async ({ page }, use) => {
     await use(new LoginPage(page));
   },
