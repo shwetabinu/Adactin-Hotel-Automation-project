@@ -20,6 +20,7 @@ Feature: Login Functionality
        |Invalid credentials |username|password|Invalid Login details or Your Password might have expired. |
 
 
+  # Exploring other ways to do login feature
   # @loginstored
   # Scenario: To verify if the user is able to login with valid credentials from a stored config file
   #   Given I navigate to the login page
