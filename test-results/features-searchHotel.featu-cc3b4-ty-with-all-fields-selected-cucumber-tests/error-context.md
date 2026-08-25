@@ -1,12 +1,12 @@
 # Page snapshot
 
 ```yaml
-- generic [active] [ref=e1]:
+- generic [ref=e1]:
   - table [ref=e2]:
     - rowgroup [ref=e3]:
-      - 'row "Adactin Group Adactin Group: Hotel Reservation System" [ref=e4]':
-        - cell "Adactin Group" [ref=e5]:
-          - img "Adactin Group" [ref=e6]
+      - 'row "AdactIn Group Adactin Group: Hotel Reservation System" [ref=e4]':
+        - cell "AdactIn Group" [ref=e5]:
+          - img "AdactIn Group" [ref=e6]
         - 'cell "Adactin Group: Hotel Reservation System" [ref=e7]':
           - 'img "Adactin Group: Hotel Reservation System" [ref=e8]'
       - row [ref=e9]:
@@ -68,18 +68,18 @@
                   - link "www.adactin.com" [ref=e47] [cursor=pointer]:
                     - /url: http://www.adactin.com
                   - text: today!
-      - row "Search Hotel (Fields marked with Red asterix (*) are mandatory) Location* - Select Location - Hotels - Select Hotel - Room Type - Select Room Type - Number of Rooms* 1 - One Check In Date* 24/08/2026 (dd/mm/yyyy) Check Out Date* 25/08/2026 (dd/mm/yyyy) Adults per Room* 1 - One Children per Room - Select Children per Room - Search Reset" [ref=e48]:
-        - cell "Search Hotel (Fields marked with Red asterix (*) are mandatory) Location* - Select Location - Hotels - Select Hotel - Room Type - Select Room Type - Number of Rooms* 1 - One Check In Date* 24/08/2026 (dd/mm/yyyy) Check Out Date* 25/08/2026 (dd/mm/yyyy) Adults per Room* 1 - One Children per Room - Select Children per Room - Search Reset" [ref=e49]:
+      - row "Search Hotel (Fields marked with Red asterix (*) are mandatory) Location* Sydney Hotels Hotel Sunshine Room Type Standard Number of Rooms* 1 - One Check In Date* Fri Aug 28 (dd/mm/yyyy) Check Out Date* Sun Aug 30 (dd/mm/yyyy) Adults per Room* 1 - One Children per Room 1 - One Search Reset" [ref=e48]:
+        - cell "Search Hotel (Fields marked with Red asterix (*) are mandatory) Location* Sydney Hotels Hotel Sunshine Room Type Standard Number of Rooms* 1 - One Check In Date* Fri Aug 28 (dd/mm/yyyy) Check Out Date* Sun Aug 30 (dd/mm/yyyy) Adults per Room* 1 - One Children per Room 1 - One Search Reset" [ref=e49]:
           - table [ref=e51]:
             - rowgroup [ref=e52]:
               - row "Search Hotel (Fields marked with Red asterix (*) are mandatory)" [ref=e53]:
                 - cell "Search Hotel (Fields marked with Red asterix (*) are mandatory)" [ref=e54]
-              - row "Location* - Select Location -" [ref=e55]:
+              - row "Location* Sydney" [ref=e55]:
                 - cell "Location*" [ref=e56]
-                - cell "- Select Location -" [ref=e57]:
+                - cell "Sydney" [ref=e57]:
                   - combobox [ref=e58]:
-                    - option "- Select Location -" [selected]
-                    - option "Sydney"
+                    - option "- Select Location -"
+                    - option "Sydney" [selected]
                     - option "Melbourne"
                     - option "Brisbane"
                     - option "Adelaide"
@@ -87,21 +87,21 @@
                     - option "New York"
                     - option "Los Angeles"
                     - option "Paris"
-              - row "Hotels - Select Hotel -" [ref=e59]:
+              - row "Hotels Hotel Sunshine" [ref=e59]:
                 - cell "Hotels" [ref=e60]
-                - cell "- Select Hotel -" [ref=e61]:
+                - cell "Hotel Sunshine" [ref=e61]:
                   - combobox [ref=e62]:
-                    - option "- Select Hotel -" [selected]
+                    - option "- Select Hotel -"
                     - option "Hotel Creek"
-                    - option "Hotel Sunshine"
+                    - option "Hotel Sunshine" [selected]
                     - option "Hotel Hervey"
                     - option "Hotel Cornice"
-              - row "Room Type - Select Room Type -" [ref=e63]:
+              - row "Room Type Standard" [ref=e63]:
                 - cell "Room Type" [ref=e64]
-                - cell "- Select Room Type -" [ref=e65]:
+                - cell "Standard" [ref=e65]:
                   - combobox [ref=e66]:
-                    - option "- Select Room Type -" [selected]
-                    - option "Standard"
+                    - option "- Select Room Type -"
+                    - option "Standard" [selected]
                     - option "Double"
                     - option "Deluxe"
                     - option "Super Deluxe"
@@ -120,15 +120,15 @@
                     - option "8 - Eight"
                     - option "9 - Nine"
                     - option "10 - Ten"
-              - row "Check In Date* 24/08/2026 (dd/mm/yyyy)" [ref=e71]:
+              - row "Check In Date* Fri Aug 28 (dd/mm/yyyy)" [ref=e71]:
                 - cell "Check In Date*" [ref=e72]
-                - cell "24/08/2026 (dd/mm/yyyy)" [ref=e73]:
-                  - textbox [ref=e74]: 24/08/2026
+                - cell "Fri Aug 28 (dd/mm/yyyy)" [ref=e73]:
+                  - textbox [ref=e74]: Fri Aug 28
                   - text: (dd/mm/yyyy)
-              - row "Check Out Date* 25/08/2026 (dd/mm/yyyy)" [ref=e75]:
+              - row "Check Out Date* Sun Aug 30 (dd/mm/yyyy)" [ref=e75]:
                 - cell "Check Out Date*" [ref=e76]
-                - cell "25/08/2026 (dd/mm/yyyy)" [ref=e77]:
-                  - textbox [ref=e78]: 25/08/2026
+                - cell "Sun Aug 30 (dd/mm/yyyy)" [ref=e77]:
+                  - textbox [active] [ref=e78]: Sun Aug 30
                   - text: (dd/mm/yyyy)
               - row "Adults per Room* 1 - One" [ref=e79]:
                 - cell "Adults per Room*" [ref=e80]
@@ -139,12 +139,12 @@
                     - option "2 - Two"
                     - option "3 - Three"
                     - option "4 - Four"
-              - row "Children per Room - Select Children per Room -" [ref=e83]:
+              - row "Children per Room 1 - One" [ref=e83]:
                 - cell "Children per Room" [ref=e84]
-                - cell "- Select Children per Room -" [ref=e85]:
+                - cell "1 - One" [ref=e85]:
                   - combobox [ref=e86]:
-                    - option "- Select Children per Room -" [selected]
-                    - option "1 - One"
+                    - option "0 - None"
+                    - option "1 - One" [selected]
                     - option "2 - Two"
                     - option "3 - Three"
                     - option "4 - Four"

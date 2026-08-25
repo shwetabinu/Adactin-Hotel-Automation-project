@@ -17,4 +17,4 @@ Scenario: To verify booking hotel without filling mandatory fields
     When The "search" button is clicked
     When I select the searched hotel
     When I click on book now button
-    Then Mandatory error messages should be displayed
+    Then Mandatory error messages should be displayed in book hotel page

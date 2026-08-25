@@ -16,7 +16,7 @@ When('I click on book now button', async ({bookHotelPage}) => {
     bookHotelPage.clickOnBookNow();
 });
 
-Then('Mandatory error messages should be displayed', async ({bookHotelPage}) => {
+Then('Mandatory error messages should be displayed in book hotel page', async ({bookHotelPage}) => {
     bookHotelPage.verifyMandatoryMessages();
 });
 

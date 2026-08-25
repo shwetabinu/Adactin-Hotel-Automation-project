@@ -10,29 +10,18 @@ export class LoginPage extends BasePage {
   private readonly passwordInput: Locator = this.page.locator('#password');
   private readonly loginButton: Locator = this.page.locator('#login');
 
-  async login(): Promise<void>;
 
-
-  // 2. Overload Signature B: Takes explicit string parameters
-  async login(username: string, password: string): Promise<void>;
-  
  
-  async login(username?: string, password?: string): Promise<void> {
-    // Logic to perform login action, e.g., filling in username and password fields and clicking the login button
-    if(username && password)
-    {
+  async login(username: string, password: string): Promise<void> {
+  
     await this.usernameInput.fill(username);
+    console.log('username used is'+username)
     await this.passwordInput.fill(password);
+    console.log('password used is' + password)
     await this.loginButton.click();
-    }
-    else
-    {
-    const { username, password } = getEnvConfig().defaultUser;
-    await this.usernameInput.fill(username);
-    await this.passwordInput.fill(password);
-    await this.loginButton.click();
-    }
+   
   }
+
 
   async loginInvalid(scenario: string){
     let username = "";

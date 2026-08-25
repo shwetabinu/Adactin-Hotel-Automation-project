@@ -24,7 +24,8 @@ When('I search with valid test data',async ({searchHotelPage}) => {
 });
 
 When('I fill the search hotel form with {string} test data',async ({searchHotelPage}, testDataType) => {
- 
+
+await searchHotelPage.goto();
 switch(testDataType){
     case "valid":{
         const search = validSearchCriteria();
@@ -69,7 +70,7 @@ When('I search without selecting any fields', async ({searchHotelPage}) => {
     searchHotelPage.clickOnSubmit();
 });
 
-Then('Mandatory error messages should be displayed', async ({searchHotelPage}) => {
+Then('Mandatory error messages should be displayed in search hotel page', async ({searchHotelPage}) => {
     const errorMessage = searchHotelPage.verifyMandatoryErrorMessages();
     await expect(errorMessage).toBe(true);
 });

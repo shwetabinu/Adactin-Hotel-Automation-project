@@ -1,7 +1,9 @@
 import { createBdd } from 'playwright-bdd';
 import { expect, test } from '../fixtures/index';
+import { config } from 'dotenv';
 //import { LoginPage } from '../pages/login.page';
 //import { SearchHotelPage } from '../pages/search-hotel.page';
+import { getEnvConfig } from '../config/env'; 
 
 const { Before, Given, When, Then } = createBdd(test);
 
@@ -46,24 +48,18 @@ Then('Relevant {string} should be displayed', async ({ loggedOutPage }, errormes
 
 When('I Login with stored valid credentials',async ({loggedOutPage}) => {
   // Write code here that turns the phrase above into concrete actions
- await loggedOutPage.login();
-
-
+ const config = getEnvConfig();
+ await loggedOutPage.login(config.defaultUser.username, config.defaultUser.password);
 });
 
 When('I login with invalid credentials of scenario type {string}',async ({loggedOutPage}, scenarioType)=>{
 
 await loggedOutPage.loginInvalid(scenarioType);
 
-})
+});
 
-Given('I am already logged into Adactin Hotel application', () => {
-  // Write code here that turns the phrase above into concrete actions
-})
 
-Given('I am already logged into Adactin Hotel application', () => {
-  // Write code here that turns the phrase above into concrete actions
-})
+
 
 
 

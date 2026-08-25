@@ -12,9 +12,9 @@ Scenario: To verify search hotel without selecting any fields
     Given I am already logged into Adactin Hotel application
     When I fill the search hotel form with "invalidBlank" test data
     When The "search" button is clicked
-    Then Mandatory error messages should be displayed
+    Then Mandatory error messages should be displayed in search hotel page
 
-
+@resetSearchedFields
 Scenario: To verify reset button in the Search Hotels page
     Given I am already logged into Adactin Hotel application
     When I fill the search hotel form with "valid" test data
