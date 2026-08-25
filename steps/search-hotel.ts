@@ -7,9 +7,9 @@ import { SearchHotelPage } from '../pages/search-hotel.page';
 const { Before, Given, When, Then } = createBdd(test);
 
 
-Given('I navigate to the login page', async ({loggedOutPage }) => {
- await loggedOutPage.goto();
-});
+// Given('I navigate to the login page', async ({loggedOutPage }) => {
+//  await loggedOutPage.goto();
+// });
 
 Given('I am already logged into Adactin Hotel application', async ({authenticatedLoginPage})=> {
  await authenticatedLoginPage.goto();
@@ -74,12 +74,12 @@ Then('Mandatory error messages should be displayed', async ({searchHotelPage}) =
     await expect(errorMessage).toBe(true);
 });
 
-When('I capture the dropdown values of each field', async ({searchHotelPage}) => {
-//write code to verify dropdown values
+// When('I capture the dropdown values of each field', async ({searchHotelPage}) => {
+// //write code to verify dropdown values
 
-});
+// });
 
-Then('The dropdown values are as expected',async ({searchHotelPage}) => {
-//write code to verify assertions for dropdown values
+// Then('The dropdown values are as expected',async ({searchHotelPage}) => {
+// //write code to verify assertions for dropdown values
 
-});
+// });

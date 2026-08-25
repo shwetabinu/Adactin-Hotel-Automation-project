@@ -2,11 +2,13 @@
 import { test as base } from 'playwright-bdd';
 import { expect } from '@playwright/test';
 import { LoginPage } from '../pages/login.page';
+import { SearchHotelPage } from '../pages/search-hotel.page';
 import { getEnvConfig } from '../config/env'; // 👈 Using your env config helper
 
 type authFixtures = {
   authenticatedLoginPage: LoginPage;    // This will represent your automatically logged-in state
-  loggedOutPage: LoginPage; // This will represent your fresh, clean login screen
+  loggedOutPage: LoginPage; 
+  searchHotelPage: SearchHotelPage; // This will represent your fresh, clean login screen
 };
 
 export const authFixtures = base.extend<authFixtures>({
@@ -37,5 +39,7 @@ export const authFixtures = base.extend<authFixtures>({
 
     // Clean up the isolated browser context after the test finishes
     await context.close();
-  }
+  },
+
+
 });

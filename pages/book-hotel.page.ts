@@ -1,6 +1,7 @@
 import { Page,Locator } from '@playwright/test';
 import { BasePage } from './base.page';
 import { PathLike } from 'fs';
+import { GuestDetails, validBookingRequest } from '../data/booking.data';
 
 export class BookHotelPage extends BasePage{
     readonly path = '/BookHotel.php';
@@ -15,6 +16,59 @@ export class BookHotelPage extends BasePage{
     private readonly bookNowButton: Locator = this.page.locator('#book_now');
     private readonly cancelButton: Locator = this.page.locator('#cancel');
     private readonly expectedTitle: string = 'Book Hotel'; // Replace with the actual expected title
+    
 
 
+
+async bookHotel(guest: GuestDetails
+  ): Promise<void> {
+    await this.firstNameInput.fill(guest.firstName);
+    await this.lastNameInput.fill(guest.lastName);
+    await this.addressInput.fill(guest.billingAddress);
+    await this.creditCardNumberInput.fill(guest.creditCardNo);
+    await this.creditCardTypeSelect.selectOption(guest.creditCardype)
+    await this.expiryMonthSelect.selectOption(guest.creditCardExpiryMonth);
+    await this.expiryYearSelect.selectOption(guest.creditCardExpiryYear);
+    await this.cvvNumberInput.fill(guest.cvvNo);
+    
+  }
+
+  async clickOnBookNow(){
+    await this.bookNowButton.click();
+  }
+
+  async clickOnCancelButton(){
+    await this.cancelButton.click();
+  }
+
+  async verifyMandatoryMessages(): Promise<boolean>{
+    
+    const mandatoryFirstNameError = await this.page.getByText('Please Enter your First Name');
+    
+    const mandatoryLastNameError = await this.page.getByText('Please Enter you Last Name');
+    const mandatoryAddressError = await this.page.getByText('Please Enter your Address');
+    const mandatoryCCNumberError = await this.page.getByText('Please Enter your 16 Digit Credit Card Number');
+    const mandatoryCctypeError = await this.page.getByText('Please Select your Credit Card Type');
+    const mandatoryccexpirymonthError = await this.page.getByText('Please Select your Credit Card Expiry Month');
+    const mandatorycvvnumberError = await this.page.getByText('Please Enter your Credit Card CVV Number');
+   
+    const isFirstNameErrorVisible = await mandatoryFirstNameError.isVisible();
+    const isLastNameErrorVisible = await mandatoryLastNameError.isVisible();
+    const isAddressErrorVisible = await mandatoryAddressError.isVisible();
+    const isCCNumberErrorVisible = await mandatoryCCNumberError.isVisible();
+    const isCCTypeErrorVisible = await mandatoryCctypeError.isVisible();
+    const isCCExpiryErrorVisible = await mandatoryccexpirymonthError.isVisible();
+    const isCvvnumberErrorVisible = await mandatorycvvnumberError.isVisible();
+
+    return (isFirstNameErrorVisible && 
+        isLastNameErrorVisible && 
+        isAddressErrorVisible &&
+        isCCNumberErrorVisible &&
+        isCCTypeErrorVisible &&
+        isCCExpiryErrorVisible &&
+        isCvvnumberErrorVisible
+     ) ;
+       
+    
+  }
 }
