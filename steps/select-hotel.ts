@@ -10,3 +10,8 @@ When('I select the searched hotel', async ({selectHotelPage }) => {
  selectHotelPage.selectFirstHotelAndContinue();
 
 });
+
+Then('User should be navigated to select hotel page', async({selectHotelPage})=> {
+expect(selectHotelPage.verifyPageTitle()).toBeTruthy;
+
+});

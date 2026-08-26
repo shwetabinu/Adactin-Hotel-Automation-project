@@ -3,7 +3,7 @@ Feature: Login Functionality
   @login
   Scenario: To verify if the user is able to login with valid credentials
     Given I navigate to the login page
-    When I Login with "testuser135" and "DS4RL3" credentials
+    When I Login with "testuser135" and "513UI8" credentials
     Then Search Hotel Page should be displayed
     
   @loginnegative

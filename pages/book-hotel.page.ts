@@ -71,4 +71,24 @@ async bookHotel(guest: GuestDetails
        
     
   }
+
+  async verifyMandatoryErrorMessageForInvalidCCExpiry()
+  {
+    this.page.once('dialog', async (dialog) => {
+    // 2. Extract the text message inside the popup
+    const message = dialog.message();
+    await dialog.accept(); 
+      return (message == ' Expiry year cannot be in Past')
+    
+  });}
+
+  async verifyIncompleteCCError():Promise<boolean>
+  {
+    const errortextVisible =  this.page.getByText("Please Enter your 16 Digit Credit Card Number");
+    const isErrorVisible = await errortextVisible.isVisible();
+    return isErrorVisible;
+  }
+   
+
+  
 }

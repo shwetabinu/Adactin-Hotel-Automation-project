@@ -1,6 +1,6 @@
 // data/booking.data.ts
 import { faker } from '@faker-js/faker';
-
+import { formatForDatePicker } from '../utils/date-helper';
 export interface SearchCriteria {
   location: string;
   hotels: string;
@@ -30,25 +30,29 @@ export interface BookingRequest {
 
 // --- Standard valid search criteria ---
 export function validSearchCriteria(overrides: Partial<SearchCriteria> = {}): SearchCriteria {
-  const checkIn = faker.date.soon({ days: 7 }).toString();
-  
-  const checkOut = faker.date.soon({ days: 3, refDate: checkIn }).toString();
+ 
+  const checkIn = faker.date.soon({ days: 7 });
+  const checkInModified = formatForDatePicker(checkIn);
+  const checkOut = faker.date.soon({ days: 3, refDate: checkIn });
+  const checkOutModified = formatForDatePicker(checkOut);
 
   return {
     location: 'Sydney',
     hotels: 'Hotel Sunshine',
     roomType: 'Standard',
     numberOfRooms: '1 - One',
-    checkInDate: checkIn,
-    checkOutDate: checkOut,
+    checkInDate: checkInModified,
+    checkOutDate: checkOutModified,
     adultsPerRoom: '1 - One',
     childrenPerRoom: '1 - One',
     ...overrides,
   };
 }
 
+
+
 export function invalidBlankSearchCriteria(overrides: Partial<SearchCriteria> = {}): SearchCriteria {
-  //const checkIn = faker.date.soon({ days: 7 }).toString();
+  const checkIn = faker.date.soon({ days: 7 }).toString();
   
  // const checkOut = faker.date.soon({ days: 3, refDate: checkIn }).toString();
 
@@ -65,11 +69,49 @@ export function invalidBlankSearchCriteria(overrides: Partial<SearchCriteria> = 
   };
 }
 
+export function sameCheckInCheckOut(overrides: Partial<SearchCriteria> = {}): SearchCriteria {
+  const checkIn = faker.date.soon({ days: 7 });
+  const checkInModified = formatForDatePicker(checkIn);
+  // const checkOut = faker.date.soon({ days: 3, refDate: checkIn });
+  // const checkOutModified = formatForDatePicker(checkOut);
+
+  return {
+    location: 'Sydney',
+    hotels: 'Hotel Sunshine',
+    roomType: 'Standard',
+    numberOfRooms: '1 - One',
+    checkInDate: checkInModified,
+    checkOutDate: checkInModified,
+    adultsPerRoom: '1 - One',
+    childrenPerRoom: '1 - One',
+    ...overrides,
+  };
+}
+
+export function pastCheckoutDate(overrides: Partial<SearchCriteria> = {}): SearchCriteria {
+  const checkIn = faker.date.soon({ days: 7 });
+  const checkInModified = formatForDatePicker(checkIn);
+   const pastDate = faker.date.recent({ days: 7 }); 
+   const checkOutModified = formatForDatePicker(pastDate);
+
+  return {
+    location: 'Sydney',
+    hotels: 'Hotel Sunshine',
+    roomType: 'Standard',
+    numberOfRooms: '1 - One',
+    checkInDate: checkInModified,
+    checkOutDate: checkInModified,
+    adultsPerRoom: '1 - One',
+    childrenPerRoom: '1 - One',
+    ...overrides,
+  };
+}
+
 export function defaultSearchCriteria(overrides: Partial<SearchCriteria> = {}): SearchCriteria {
   const today = new Date();
 
 // Australian/UK Format (DD/MM/YYYY) -> "24/08/2026"
- const checkInDate = today.toLocaleDateString('en-GB');
+const checkInDate = today.toLocaleDateString('en-GB');
 const tomorrow = new Date(today);
 
 // Add exactly 1 day

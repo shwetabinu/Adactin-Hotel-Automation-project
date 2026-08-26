@@ -21,3 +21,4 @@ When('I select the order for cancelation and click on cancel button for {string}
 Then('The booked order {string} should be canceled', async ({bookedItineraryPage} , orderId) => {
 bookedItineraryPage.verifysuccessfulBookingCancelation(orderId);
 });
+

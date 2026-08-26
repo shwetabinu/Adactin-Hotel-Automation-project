@@ -1,7 +1,7 @@
 import { createBdd } from 'playwright-bdd';
 
 import { expect, test } from '../fixtures/index';
-import { defaultSearchCriteria, invalidBlankSearchCriteria, validSearchCriteria } from '../data/booking.data';
+import { defaultSearchCriteria, invalidBlankSearchCriteria, pastCheckoutDate, sameCheckInCheckOut, validSearchCriteria } from '../data/booking.data';
 import { SearchHotelPage } from '../pages/search-hotel.page';
 
 const { Before, Given, When, Then } = createBdd(test);
@@ -32,10 +32,25 @@ switch(testDataType){
         await searchHotelPage.searchHotel(search);
         break;
     }
-    case "invalidblank":{
+    case "blank fields":{
         const search = invalidBlankSearchCriteria();
-        searchHotelPage.searchHotel(search);
+        await searchHotelPage.searchHotel(search);
         break;
+
+    }
+    case "mandatory":{
+        await searchHotelPage.searchHotelMandatory();
+        break;
+
+    }
+    case "same checkin and checkout":{
+        const search = sameCheckInCheckOut();
+        await searchHotelPage.searchHotel(search);
+        break;
+    }
+    case "past checkout":{
+        const search = pastCheckoutDate();
+        await searchHotelPage.searchHotel(search);
     }
 
 } 
@@ -45,7 +60,7 @@ switch(testDataType){
 When('The {string} button is clicked',async ({searchHotelPage}, buttonType) => {
  
  switch(buttonType){
-    case "submit":  await searchHotelPage.clickOnSubmit();break;
+    case "search":  await searchHotelPage.clickOnSubmit();break;
     case "reset": await searchHotelPage.resetForm();break;
  }
   
@@ -53,16 +68,27 @@ When('The {string} button is clicked',async ({searchHotelPage}, buttonType) => {
 
 Then('The results should be resetted', async ({searchHotelPage}) => {
     const search = defaultSearchCriteria();
-    await expect(searchHotelPage.verifyResettedForm).toBe(true);
+    expect(searchHotelPage.verifyResettedForm(search)).toBe(true);
 });
  
-
-
 
 Then('Search results should be displayed',async ({searchHotelPage}) => {
  await expect(searchHotelPage.resultsTable).toBeVisible();
 
 });
+
+Then('Mandatory error message should be displayed for {string}', async ({searchHotelPage}, errorCondition) => {
+    let errorMessage;
+    switch(errorCondition){
+    case "same check in and check out": {
+         errorMessage = await searchHotelPage.verifyMandatoryErrorMessageForSameCheckinCheckout(); break;}
+    case "past checkout": {  errorMessage = await searchHotelPage.verifyMandatoryErrorMessageForSameCheckinCheckout();break;}
+    case "blank fields":  { errorMessage = await searchHotelPage.verifyMandatoryErrorMessages();break;}
+ }
+ expect(errorMessage).toBe(true);
+}
+);
+
 
 When('I search without selecting any fields', async ({searchHotelPage}) => {
     const search = invalidBlankSearchCriteria();
@@ -70,17 +96,7 @@ When('I search without selecting any fields', async ({searchHotelPage}) => {
     searchHotelPage.clickOnSubmit();
 });
 
-Then('Mandatory error messages should be displayed in search hotel page', async ({searchHotelPage}) => {
-    const errorMessage = searchHotelPage.verifyMandatoryErrorMessages();
-    await expect(errorMessage).toBe(true);
-});
-
-// When('I capture the dropdown values of each field', async ({searchHotelPage}) => {
-// //write code to verify dropdown values
-
-// });
-
-// Then('The dropdown values are as expected',async ({searchHotelPage}) => {
-// //write code to verify assertions for dropdown values
-
+// Then('Mandatory error messages should be displayed in search hotel page', async ({searchHotelPage}) => {
+//     const errorMessage = await searchHotelPage.verifyMandatoryErrorMessages();
+//     expect(errorMessage).toBe(true);
 // });
