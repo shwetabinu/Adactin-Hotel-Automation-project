@@ -19,8 +19,9 @@ export abstract class BasePage {
   }
 
   async waitForLoad(): Promise<void> {
-    await this.page.waitForLoadState('networkidle');
-  }
+  await this.page.waitForLoadState('domcontentloaded');
+}
+  
 
   async getTitle(): Promise<string> {
     return this.page.title();

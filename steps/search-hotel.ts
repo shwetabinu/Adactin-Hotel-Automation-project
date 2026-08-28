@@ -68,7 +68,8 @@ When('The {string} button is clicked',async ({searchHotelPage}, buttonType) => {
 
 Then('The results should be resetted', async ({searchHotelPage}) => {
     const search = defaultSearchCriteria();
-    expect(searchHotelPage.verifyResettedForm(search)).toBe(true);
+    
+   expect(await searchHotelPage.verifyResettedForm(search)).toBe(true);
 });
  
 

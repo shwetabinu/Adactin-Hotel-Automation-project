@@ -10,7 +10,7 @@ export class SelectHotelPage extends BasePage{
 
 
     async selectFirstHotelAndContinue() {
-        this.page.waitForLoadState("load");
+        await this.page.waitForLoadState("load");
         await this.hotelRadioButtons.click(); 
        
         await this.continueButton.click();

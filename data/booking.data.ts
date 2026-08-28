@@ -74,6 +74,7 @@ export function sameCheckInCheckOut(overrides: Partial<SearchCriteria> = {}): Se
   const checkInModified = formatForDatePicker(checkIn);
   // const checkOut = faker.date.soon({ days: 3, refDate: checkIn });
   // const checkOutModified = formatForDatePicker(checkOut);
+  console.log('')
 
   return {
     location: 'Sydney',
@@ -100,7 +101,7 @@ export function pastCheckoutDate(overrides: Partial<SearchCriteria> = {}): Searc
     roomType: 'Standard',
     numberOfRooms: '1 - One',
     checkInDate: checkInModified,
-    checkOutDate: checkInModified,
+    checkOutDate: checkOutModified,
     adultsPerRoom: '1 - One',
     childrenPerRoom: '1 - One',
     ...overrides,
@@ -126,8 +127,8 @@ const checkOutDate = tomorrow.toLocaleDateString('en-GB');
     numberOfRooms: '1 - One',
     checkInDate: checkInDate,
     checkOutDate: checkOutDate,
-    adultsPerRoom: '- Select Adults per Room -',
-    childrenPerRoom: '1 - One',
+    adultsPerRoom: '1 - One',
+    childrenPerRoom: '0 - None',
     ...overrides,
   };
 }

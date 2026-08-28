@@ -1,6 +1,7 @@
+@login
 Feature: Login Functionality
 
-  @login
+  @loginpositive
   Scenario: To verify if the user is able to login with valid credentials
     Given I navigate to the login page
     When I Login with "testuser135" and "513UI8" credentials

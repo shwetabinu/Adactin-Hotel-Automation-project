@@ -7,11 +7,11 @@ const { Before, Given, When, Then } = createBdd(test);
 
 
 When('I select the searched hotel', async ({selectHotelPage }) => {
- selectHotelPage.selectFirstHotelAndContinue();
+ await selectHotelPage.selectFirstHotelAndContinue();
 
 });
 
 Then('User should be navigated to select hotel page', async({selectHotelPage})=> {
-expect(selectHotelPage.verifyPageTitle()).toBeTruthy;
+ await expect(await selectHotelPage.verifyPageTitle()).toBeTruthy();
 
 });

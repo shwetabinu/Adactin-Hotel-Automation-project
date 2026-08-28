@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 import { getEnvConfig, assertEnvConfig } from './config/env';
 import dotenv from 'dotenv';
-import { defineBddConfig } from 'playwright-bdd';
+import { defineBddConfig, cucumberReporter } from 'playwright-bdd';
 
 // Define where your features and step definitions live
 const cucumberTests = defineBddConfig({
@@ -19,13 +19,14 @@ export default defineConfig({
   timeout: 30 * 1000,
   expect: { timeout: 5000 },
   fullyParallel: true,
-  reporter: [["list"]],
+  reporter: [["list"],
+  cucumberReporter('html', { outputFile: 'cucumber-report/report.html' })],
   use: {
     baseURL: env.baseURL,
     navigationTimeout: env.timeouts.navigation,
     headless: false,
     viewport: { width: 1280, height: 720 },
-    actionTimeout: 0,
+    actionTimeout: 15_000,
     ignoreHTTPSErrors: true,
     video: 'retain-on-failure',
   },

@@ -23,11 +23,15 @@ export class SearchHotelPage extends BasePage{
     criteria: SearchCriteria
   ): Promise<void> {
     await this.locationDropdown.selectOption(criteria.location);
+    console.log('Location selected is' + criteria.location)
     await this.hotelsDropdown.selectOption(criteria.hotels);
+    console.log('Hotel selected is'+criteria.hotels);
     await this.roomTypeDropdown.selectOption(criteria.roomType);
     await this.numberOfRoomsDropdown.selectOption(criteria.numberOfRooms);
     await this.checkInDateInput.fill(criteria.checkInDate);
+    console.log('checkin date is'+ criteria.checkInDate);
     await this.checkOutDateInput.fill(criteria.checkOutDate);
+    console.log('checkout date is' + criteria.checkOutDate);
     await this.adultsPerRoomDropdown.selectOption(criteria.adultsPerRoom);
     await this.childrenPerRoomDropdown.selectOption(criteria.childrenPerRoom);
     
