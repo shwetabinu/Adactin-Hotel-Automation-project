@@ -19,7 +19,7 @@ export const authFixtures = base.extend<authFixtures>({
 
     // Execute the actual login automation steps on your page object
     await authenticatedLoginPage.goto(); // Or whatever navigation method you named
-    await authenticatedLoginPage.login(config.defaultUser.username,config.defaultUser.username); // Replace with your LoginPage method names
+    await authenticatedLoginPage.login(config.defaultUser.username,config.defaultUser.password); // Replace with your LoginPage method names
     
     // Pass the already authenticated page object to your standard test steps
     await use(authenticatedLoginPage);

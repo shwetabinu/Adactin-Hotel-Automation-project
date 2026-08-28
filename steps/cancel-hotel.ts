@@ -11,11 +11,14 @@ Given('I am in the booked itinerary page and an existing order is present in the
 
 });
 
-When('I select the order for cancelation and click on cancel button', async ({bookedItineraryPage}, orderId)=> {
-bookedItineraryPage.cancelBookedOrder(orderId);
+
+
+When('I select the order for cancelation and click on cancel button for {string}', async ({bookedItineraryPage}, orderId: string) => {
+  bookedItineraryPage.cancelBookedOrder(orderId);
 });
 
 
-Then('The booked order should be canceled', async ({bookedItineraryPage} , orderId) => {
+Then('The booked order {string} should be canceled', async ({bookedItineraryPage} , orderId) => {
 bookedItineraryPage.verifysuccessfulBookingCancelation(orderId);
 });
+

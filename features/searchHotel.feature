@@ -1,27 +1,33 @@
+@searchHotel
 Feature: Search Hotel Functionality
 
-@searchHotelValid
-Scenario: To verify search hotel functionality with all fields selected
+@searchHotelPositive
+Scenario Outline: To verify search hotel functionality for <testDataType> form fields
     Given I am already logged into Adactin Hotel application
-    When I fill the search hotel form with "valid" test data
+    When I fill the search hotel form with "<testDataType>" test data
     When The "search" button is clicked
     Then Search results should be displayed
+Examples:
+|testDataType|
+|valid|
+|mandatory| 
 
 @searchHotelInvalid
-Scenario: To verify search hotel without selecting any fields
+Scenario Outline: To verify search hotel functionality for <searchCriteria>
     Given I am already logged into Adactin Hotel application
-    When I fill the search hotel form with "invalidBlank" test data
+    When I fill the search hotel form with "<searchCriteria>" test data
     When The "search" button is clicked
-    Then Mandatory error messages should be displayed
+    Then Mandatory error message should be displayed for "<searchCriteria>"
+    
+    Examples:
+    |searchCriteria|
+    |same check in and check out|
+    |past checkout|
+    |blank fields|
 
-
+@resetSearchedFields
 Scenario: To verify reset button in the Search Hotels page
     Given I am already logged into Adactin Hotel application
     When I fill the search hotel form with "valid" test data
     When The "reset" button is clicked
     Then The results should be resetted
-
-# Scenario: To verify dropdown values of each field in the Search Hotel page
-#     Given I am already logged into Adactin Hotel application
-#     When I capture the dropdown values of each field
-#     Then The dropdown values are as expected
