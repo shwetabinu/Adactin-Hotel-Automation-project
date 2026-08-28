@@ -14,7 +14,7 @@ export class BookedItineraryPage extends BasePage {
     private readonly pageHeading: Locator = this.itineraryTable.locator('td.login_title');
     private readonly resultMessage: Locator = this.page.locator('#search_result_error');
     private readonly expectedTitle: string = 'Booked Itinerary';
-    /** Remembered between the When and Then steps of a cancelation scenario. */
+    /** Remembered across the steps of a cancelation scenario. */
     private cancelledOrderId: string | null = null;
 
 
@@ -50,22 +50,30 @@ export class BookedItineraryPage extends BasePage {
 
     }
 
-    /**
-     * Cancels whichever booking is listed first. Preferred over naming a fixed order id:
-     * a cancelation is permanent, so a hard-coded id only ever works on the first run.
-     */
-    async cancelFirstBookedOrder(): Promise<string> {
-        const orderId = await this.getFirstOrderId();
-        await this.cancelBookedOrder(orderId);
+    /** Records the order this scenario booked, so the later steps can act on it. */
+    rememberOrder(orderId: string){
         this.cancelledOrderId = orderId;
+    }
+
+    async verifyOrderIsListed(orderId: string){
+        await expect(this.page.getByRole('button', { name: `Cancel ${orderId}` })).toBeVisible();
+    }
+
+    async cancelRememberedOrder(): Promise<string> {
+        const orderId = this.requireRememberedOrder();
+        await this.cancelBookedOrder(orderId);
         return orderId;
     }
 
     async verifyLastCancelationSucceeded(){
+        await this.verifysuccessfulBookingCancelation(this.requireRememberedOrder());
+    }
+
+    private requireRememberedOrder(): string {
         if (!this.cancelledOrderId) {
-            throw new Error('No order was cancelled in this scenario - cancelFirstBookedOrder() was never called.');
+            throw new Error('No order was recorded for this scenario - rememberOrder() was never called.');
         }
-        await this.verifysuccessfulBookingCancelation(this.cancelledOrderId);
+        return this.cancelledOrderId;
     }
 
     async verifysuccessfulBookingCancelation(orderId: string){
