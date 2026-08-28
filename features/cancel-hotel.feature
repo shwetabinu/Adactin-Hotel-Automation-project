@@ -4,8 +4,8 @@ Feature: Cancel Hotel functionality
 @cancelHotelBookedItinerary
 Scenario: To verify successful booking cancelation
 Given I am in the booked itinerary page and an existing order is present in the page
-When I select the order for cancelation and click on cancel button for "orderid"
-Then The booked order "Q3S899T63G" should be canceled
+When I select the newly booked order for cancelation and click on its cancel button
+Then The selected booked order should be canceled
 
 @cancelHotelBookHotel
 Scenario: To verify inflight cancelling by click on Cancel button from Book Hotel page after clicking on Continue button from Select Hotel Page

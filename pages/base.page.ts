@@ -14,13 +14,17 @@ export abstract class BasePage {
   abstract readonly path: string; // e.g. '/SearchHotel.php'
 
     async goto(): Promise<void> {
-    await this.page.goto(this.path);
+    // Adactin pages embed a YouTube iframe and analytics, so the 'load' event that
+    // page.goto() waits for by default can outlast NAV_TIMEOUT. waitForLoad() below
+    // is the wait that actually matters for interacting with the page.
+    await this.page.goto(this.path, { waitUntil: 'domcontentloaded' });
     await this.waitForLoad();
   }
 
   async waitForLoad(): Promise<void> {
-    await this.page.waitForLoadState('networkidle');
-  }
+  await this.page.waitForLoadState('domcontentloaded');
+}
+  
 
   async getTitle(): Promise<string> {
     return this.page.title();

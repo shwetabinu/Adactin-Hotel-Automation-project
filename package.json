@@ -1,7 +1,6 @@
 {
   "name": "Hotel Adactin Application Automation project",
   "version": "1.0.0",
-  "type": "module",
   "dependencies": {},
   "devDependencies": {
     "@cucumber/cucumber": "^13.2.1",

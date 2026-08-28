@@ -43,7 +43,7 @@ switch(testDataType){
         break;
 
     }
-    case "same checkin and checkout":{
+    case "same checkin and check out":{
         const search = sameCheckInCheckOut();
         await searchHotelPage.searchHotel(search);
         break;
@@ -51,9 +51,12 @@ switch(testDataType){
     case "past checkout":{
         const search = pastCheckoutDate();
         await searchHotelPage.searchHotel(search);
+        break;
     }
+    default:
+        throw new Error(`Unknown test data type: ${testDataType}`);
 
-} 
+}
 
 });
 
@@ -68,7 +71,8 @@ When('The {string} button is clicked',async ({searchHotelPage}, buttonType) => {
 
 Then('The results should be resetted', async ({searchHotelPage}) => {
     const search = defaultSearchCriteria();
-    expect(searchHotelPage.verifyResettedForm(search)).toBe(true);
+
+   expect(await searchHotelPage.verifyResettedForm(search)).toBe(true);
 });
  
 
@@ -80,10 +84,12 @@ Then('Search results should be displayed',async ({searchHotelPage}) => {
 Then('Mandatory error message should be displayed for {string}', async ({searchHotelPage}, errorCondition) => {
     let errorMessage;
     switch(errorCondition){
-    case "same check in and check out": {
+    case "same checkin and check out": {
          errorMessage = await searchHotelPage.verifyMandatoryErrorMessageForSameCheckinCheckout(); break;}
-    case "past checkout": {  errorMessage = await searchHotelPage.verifyMandatoryErrorMessageForSameCheckinCheckout();break;}
+    case "past checkout": {  errorMessage = await searchHotelPage.verifyMandatoryErrorMessageForPastCheckout();break;}
     case "blank fields":  { errorMessage = await searchHotelPage.verifyMandatoryErrorMessages();break;}
+    default:
+        throw new Error(`Unknown error condition: ${errorCondition}`);
  }
  expect(errorMessage).toBe(true);
 }

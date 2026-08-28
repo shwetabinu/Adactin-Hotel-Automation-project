@@ -13,9 +13,9 @@ test.describe('Book hotel functionality', () => {
     await Then('The booking confirmation page is displayed with the order id', null, { bookingConfirmationPage }); 
   });
 
-  test.describe('To verify booking hotel for "<testDataType>"', () => {
+  test.describe('To verify booking hotel for <testDataType>', () => {
 
-    test('To verify booking hotel for "blank fields"', { tag: ['@bookHotel', '@bookHotelnegative'] }, async ({ Given, When, Then, authenticatedLoginPage, bookHotelPage, searchHotelPage, selectHotelPage }) => { 
+    test('To verify booking hotel for blank fields', { tag: ['@bookHotel', '@bookHotelnegative'] }, async ({ Given, When, Then, authenticatedLoginPage, bookHotelPage, searchHotelPage, selectHotelPage }) => { 
       await Given('I am already logged into Adactin Hotel application', null, { authenticatedLoginPage }); 
       await When('I fill the search hotel form with "valid" test data', null, { searchHotelPage }); 
       await When('The "search" button is clicked', null, { searchHotelPage }); 
@@ -25,7 +25,7 @@ test.describe('Book hotel functionality', () => {
       await Then('Mandatory error messages should be displayed in book hotel page for "blank fields"', null, { bookHotelPage }); 
     });
 
-    test('To verify booking hotel for "invalid credit card expiry date"', { tag: ['@bookHotel', '@bookHotelnegative'] }, async ({ Given, When, Then, authenticatedLoginPage, bookHotelPage, searchHotelPage, selectHotelPage }) => { 
+    test('To verify booking hotel for invalid credit card expiry date', { tag: ['@bookHotel', '@bookHotelnegative'] }, async ({ Given, When, Then, authenticatedLoginPage, bookHotelPage, searchHotelPage, selectHotelPage }) => { 
       await Given('I am already logged into Adactin Hotel application', null, { authenticatedLoginPage }); 
       await When('I fill the search hotel form with "valid" test data', null, { searchHotelPage }); 
       await When('The "search" button is clicked', null, { searchHotelPage }); 
@@ -35,7 +35,7 @@ test.describe('Book hotel functionality', () => {
       await Then('Mandatory error messages should be displayed in book hotel page for "invalid credit card expiry date"', null, { bookHotelPage }); 
     });
 
-    test('To verify booking hotel for "incomplete credit card number"', { tag: ['@bookHotel', '@bookHotelnegative'] }, async ({ Given, When, Then, authenticatedLoginPage, bookHotelPage, searchHotelPage, selectHotelPage }) => { 
+    test('To verify booking hotel for incomplete credit card number', { tag: ['@bookHotel', '@bookHotelnegative'] }, async ({ Given, When, Then, authenticatedLoginPage, bookHotelPage, searchHotelPage, selectHotelPage }) => { 
       await Given('I am already logged into Adactin Hotel application', null, { authenticatedLoginPage }); 
       await When('I fill the search hotel form with "valid" test data', null, { searchHotelPage }); 
       await When('The "search" button is clicked', null, { searchHotelPage }); 

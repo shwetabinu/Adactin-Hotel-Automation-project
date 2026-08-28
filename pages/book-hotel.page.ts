@@ -4,7 +4,7 @@ import { PathLike } from 'fs';
 import { GuestDetails, validBookingRequest } from '../data/booking.data';
 
 export class BookHotelPage extends BasePage{
-    readonly path = '/BookHotel.php';
+    readonly path = 'BookHotel.php';
     private readonly firstNameInput: Locator = this.page.locator('#first_name');;
     private readonly lastNameInput: Locator = this.page.locator('#last_name');
     private readonly addressInput: Locator = this.page.locator('#address');
@@ -22,7 +22,7 @@ export class BookHotelPage extends BasePage{
 
 async bookHotel(guest: GuestDetails
   ): Promise<void> {
-    this.page.waitForLoadState('load');
+    await this.page.waitForLoadState('load');
     await this.firstNameInput.fill(guest.firstName);
     await this.lastNameInput.fill(guest.lastName);
     await this.addressInput.fill(guest.billingAddress);

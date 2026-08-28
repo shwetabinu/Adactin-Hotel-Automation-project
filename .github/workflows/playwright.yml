@@ -1,0 +1,56 @@
+name: Cucumber BDD Tests
+
+on:
+  push:
+    branches: [master, AutomationChanges]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  cucumber-tests:
+    name: Run cucumber-tests suite
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      # node_modules is gitignored, so dependencies come from package-lock.json.
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      # .features-gen is gitignored - regenerate the specs from features/.
+      - name: Generate BDD specs
+        run: npx bddgen
+
+      # Only cucumber-tests: the older non-BDD specs under tests/ (smoke-tests)
+      # are currently failing and are not part of this suite.
+      - name: Run cucumber tests
+        run: npx playwright test --project=cucumber-tests
+
+      - name: Upload cucumber report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-report
+          path: cucumber-report/
+          retention-days: 30
+
+      - name: Upload failure traces and videos
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: test-results/
+          retention-days: 7

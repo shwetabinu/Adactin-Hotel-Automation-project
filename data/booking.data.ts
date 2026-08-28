@@ -1,6 +1,6 @@
 // data/booking.data.ts
 import { faker } from '@faker-js/faker';
-import { formatForDatePicker } from '../utils/date-helper';
+import { addDays, formatForDatePicker } from '../utils/date-helper';
 export interface SearchCriteria {
   location: string;
   hotels: string;
@@ -33,7 +33,9 @@ export function validSearchCriteria(overrides: Partial<SearchCriteria> = {}): Se
  
   const checkIn = faker.date.soon({ days: 7 });
   const checkInModified = formatForDatePicker(checkIn);
-  const checkOut = faker.date.soon({ days: 3, refDate: checkIn });
+  // Adactin rejects a search when check-in and check-out fall on the same day, and
+  // faker.date.soon() is inclusive of its reference date - always step at least a day on.
+  const checkOut = addDays(checkIn, faker.number.int({ min: 1, max: 3 }));
   const checkOutModified = formatForDatePicker(checkOut);
 
   return {
@@ -74,6 +76,7 @@ export function sameCheckInCheckOut(overrides: Partial<SearchCriteria> = {}): Se
   const checkInModified = formatForDatePicker(checkIn);
   // const checkOut = faker.date.soon({ days: 3, refDate: checkIn });
   // const checkOutModified = formatForDatePicker(checkOut);
+  console.log('')
 
   return {
     location: 'Sydney',
@@ -100,7 +103,7 @@ export function pastCheckoutDate(overrides: Partial<SearchCriteria> = {}): Searc
     roomType: 'Standard',
     numberOfRooms: '1 - One',
     checkInDate: checkInModified,
-    checkOutDate: checkInModified,
+    checkOutDate: checkOutModified,
     adultsPerRoom: '1 - One',
     childrenPerRoom: '1 - One',
     ...overrides,
@@ -126,8 +129,8 @@ const checkOutDate = tomorrow.toLocaleDateString('en-GB');
     numberOfRooms: '1 - One',
     checkInDate: checkInDate,
     checkOutDate: checkOutDate,
-    adultsPerRoom: '- Select Adults per Room -',
-    childrenPerRoom: '1 - One',
+    adultsPerRoom: '1 - One',
+    childrenPerRoom: '- Select Children per Room -',
     ...overrides,
   };
 }

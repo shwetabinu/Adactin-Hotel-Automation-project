@@ -12,31 +12,31 @@ When('I enter {string} booking details', async ({bookHotelPage },detailType) => 
     {
     case "invalid credit card expiry date":{const guest = validGuestDetails();
         guest.creditCardExpiryYear='2018';
-        bookHotelPage.bookHotel(guest);break;}
+        await bookHotelPage.bookHotel(guest);break;}
     case "blank fields":break;   
     case "incomplete credit card number":{const guest = validGuestDetails();
         guest.creditCardNo="4111";
-        bookHotelPage.bookHotel(guest);break;}
+        await bookHotelPage.bookHotel(guest);break;}
     case "valid":    {const guest = validGuestDetails();
-        bookHotelPage.bookHotel(guest);break;}}
+        await bookHotelPage.bookHotel(guest);break;}}
     
     }
 
 );
 
 When('I click on cancel button from book hotel page', async ({bookHotelPage}) => {
-    bookHotelPage.clickOnCancelButton();
+    await bookHotelPage.clickOnCancelButton();
 });
 
 When('I click on book now button', async ({bookHotelPage}) => {
-    bookHotelPage.clickOnBookNow();
+    await bookHotelPage.clickOnBookNow();
 });
 
 Then('Mandatory error messages should be displayed in book hotel page for {string}', async ({bookHotelPage}, errorMessageType) => {
     switch(errorMessageType){
-        case "blank fields": bookHotelPage.verifyMandatoryMessages();break;
-        case "invalid credit card expiry date": bookHotelPage.verifyMandatoryErrorMessageForInvalidCCExpiry();break;
-        case "incomplete credit card number": bookHotelPage.verifyIncompleteCCError();
+        case "blank fields": await bookHotelPage.verifyMandatoryMessages();break;
+        case "invalid credit card expiry date": await bookHotelPage.verifyMandatoryErrorMessageForInvalidCCExpiry();break;
+        case "incomplete credit card number": await bookHotelPage.verifyIncompleteCCError();
     }
     
 });
