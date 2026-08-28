@@ -7,6 +7,7 @@ const { Before, Given, When, Then } = createBdd(test);
 
 
 When('I enter {string} booking details', async ({bookHotelPage },detailType) => {
+    
     switch(detailType)
     {
     case "invalid credit card expiry date":{const guest = validGuestDetails();
@@ -16,8 +17,9 @@ When('I enter {string} booking details', async ({bookHotelPage },detailType) => 
     case "incomplete credit card number":{const guest = validGuestDetails();
         guest.creditCardNo="4111";
         bookHotelPage.bookHotel(guest);break;}
-
-    }
+    case "valid":    {const guest = validGuestDetails();
+        bookHotelPage.bookHotel(guest);break;}}
+    
     }
 
 );

@@ -22,6 +22,7 @@ export class BookHotelPage extends BasePage{
 
 async bookHotel(guest: GuestDetails
   ): Promise<void> {
+    this.page.waitForLoadState('load');
     await this.firstNameInput.fill(guest.firstName);
     await this.lastNameInput.fill(guest.lastName);
     await this.addressInput.fill(guest.billingAddress);
