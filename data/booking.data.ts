@@ -1,6 +1,6 @@
 // data/booking.data.ts
 import { faker } from '@faker-js/faker';
-import { formatForDatePicker } from '../utils/date-helper';
+import { addDays, formatForDatePicker } from '../utils/date-helper';
 export interface SearchCriteria {
   location: string;
   hotels: string;
@@ -33,7 +33,9 @@ export function validSearchCriteria(overrides: Partial<SearchCriteria> = {}): Se
  
   const checkIn = faker.date.soon({ days: 7 });
   const checkInModified = formatForDatePicker(checkIn);
-  const checkOut = faker.date.soon({ days: 3, refDate: checkIn });
+  // Adactin rejects a search when check-in and check-out fall on the same day, and
+  // faker.date.soon() is inclusive of its reference date - always step at least a day on.
+  const checkOut = addDays(checkIn, faker.number.int({ min: 1, max: 3 }));
   const checkOutModified = formatForDatePicker(checkOut);
 
   return {
@@ -128,7 +130,7 @@ const checkOutDate = tomorrow.toLocaleDateString('en-GB');
     checkInDate: checkInDate,
     checkOutDate: checkOutDate,
     adultsPerRoom: '1 - One',
-    childrenPerRoom: '0 - None',
+    childrenPerRoom: '- Select Children per Room -',
     ...overrides,
   };
 }

@@ -21,7 +21,7 @@ Scenario Outline: To verify search hotel functionality for <searchCriteria>
     
     Examples:
     |searchCriteria|
-    |same check in and check out|
+    |same checkin and check out|
    # |past checkout|
    # |blank fields|
 

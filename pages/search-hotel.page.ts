@@ -4,7 +4,7 @@ import { SearchCriteria } from '../data/booking.data';
 
 
 export class SearchHotelPage extends BasePage{
-  readonly path = '/SearchHotel.php'
+  readonly path = 'SearchHotel.php'
   private readonly locationDropdown: Locator = this.page.locator('#location');
   private readonly hotelsDropdown: Locator = this.page.locator('#hotels');
   private readonly roomTypeDropdown: Locator = this.page.locator('#room_type');

@@ -16,7 +16,7 @@ assertEnvConfig(env);
 
 export default defineConfig({
   testDir: './tests',
-  timeout: 30 * 1000,
+  timeout: 90 * 1000, // Adactin regularly takes 15-25s to serve a page; a 30s budget can't fit a multi-navigation scenario
   expect: { timeout: 5000 },
   fullyParallel: true,
   reporter: [["list"],

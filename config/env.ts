@@ -1,8 +1,9 @@
 import dotenv from 'dotenv';
 import path from 'path';
-import { fileURLToPath } from 'url';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+
+// Resolved from this file's directory so the .env lookup works no matter which
+// directory the test run is launched from.
+const projectRoot = path.resolve(__dirname, '..');
 
 export type Build = 'build1' | 'build2';
 
@@ -23,7 +24,7 @@ export interface EnvConfig {
 const build = (process.env.BUILD as Build) ?? 'build2';
 
 dotenv.config({
-  path: path.resolve(__dirname, `../.env.${build}`),
+  path: path.join(projectRoot, `.env.${build}`),
 });
 
 export function getEnvConfig(): EnvConfig {
