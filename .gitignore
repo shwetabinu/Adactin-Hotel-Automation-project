@@ -26,3 +26,6 @@ playwright/.cache/
 *.swp
 *.log
 npm-debug.log*
+
+# Local working notes, not part of the project
+FIXES.txt

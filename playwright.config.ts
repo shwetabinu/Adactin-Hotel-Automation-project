@@ -2,6 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 import { getEnvConfig, assertEnvConfig } from './config/env';
 import dotenv from 'dotenv';
 import { defineBddConfig, cucumberReporter } from 'playwright-bdd';
+import path from 'path';
 
 // Define where your features and step definitions live
 const cucumberTests = defineBddConfig({
@@ -10,17 +11,21 @@ const cucumberTests = defineBddConfig({
   importTestFrom: 'fixtures/index.ts'
 });
 
-dotenv.config();
+const environment = process.env.ENV || 'dev';
+dotenv.config({ path: path.resolve(__dirname, `.env.${environment}`) });
+//dotenv.config();
 const env = getEnvConfig();
 assertEnvConfig(env);
 
 export default defineConfig({
   testDir: './tests',
   timeout: 90 * 1000, // Adactin regularly takes 15-25s to serve a page; a 30s budget can't fit a multi-navigation scenario
+  workers: 4,
   expect: { timeout: 5000 },
   fullyParallel: true,
   retries: process.env.CI ? 2 : 0, // Adactin is a slow shared demo site; retry transient timeouts on CI
   reporter: [["list"],
+
   cucumberReporter('html', { outputFile: 'cucumber-report/report.html' })],
   use: {
     baseURL: env.baseURL,
@@ -30,6 +35,7 @@ export default defineConfig({
     actionTimeout: env.timeouts.default, // a click that triggers navigation waits on this too, and Adactin pages are slow
     ignoreHTTPSErrors: true,
     video: 'retain-on-failure',
+
   },
   projects: [
     //project A: standard non-BDD Playwright Tests

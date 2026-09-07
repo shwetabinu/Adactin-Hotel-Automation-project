@@ -93,5 +93,6 @@ export class LoginPage extends BasePage {
     // Logic to verify blank username or password message, e.g., check for a specific element on the page
     const blankMessage = this.page.getByText('Enter Password'); // Replace with actual selector
     return await blankMessage.isVisible();
+  
   }
 }

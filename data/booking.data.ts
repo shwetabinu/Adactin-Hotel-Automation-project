@@ -16,7 +16,7 @@ export interface GuestDetails {
   firstName: string;
   lastName: string;
   creditCardNo: string;
-  creditCardype: string;
+  creditCardType: string;
   creditCardExpiryMonth: string;
   creditCardExpiryYear: string;
   cvvNo: string;
@@ -140,7 +140,7 @@ export function validGuestDetails(overrides: Partial<GuestDetails> = {}): GuestD
     firstName: faker.person.firstName(),
     lastName: faker.person.lastName(),
     creditCardNo: '4111111111111111', // standard test Visa number pattern
-    creditCardype: 'VISA',
+    creditCardType: 'VISA',
     creditCardExpiryMonth: '12',
     creditCardExpiryYear: String(new Date().getFullYear() + 2),
     cvvNo: faker.finance.creditCardCVV(),

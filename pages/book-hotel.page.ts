@@ -27,7 +27,7 @@ async bookHotel(guest: GuestDetails
     await this.lastNameInput.fill(guest.lastName);
     await this.addressInput.fill(guest.billingAddress);
     await this.creditCardNumberInput.fill(guest.creditCardNo);
-    await this.creditCardTypeSelect.selectOption(guest.creditCardype)
+    await this.creditCardTypeSelect.selectOption(guest.creditCardType)
     await this.expiryMonthSelect.selectOption(guest.creditCardExpiryMonth);
     await this.expiryYearSelect.selectOption(guest.creditCardExpiryYear);
     await this.cvvNumberInput.fill(guest.cvvNo);
