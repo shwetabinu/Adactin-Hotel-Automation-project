@@ -32,7 +32,7 @@ export class NavigationBar {
     }
 
     async goToChangePassword(): Promise<void> {
-    await this.logoutLink.click();
+    await this.changePasswordLink.click();
     }
 
      async getLoggedInUsername(): Promise<string> {
